@@ -8,8 +8,20 @@ function satu() {
            , 'left': '║' , 'left-mid': '╟' , 'mid': '─' , 'mid-mid': '┼'
            , 'right': '║' , 'right-mid': '╢' , 'middle': '│' }
   });
-  db.all(`SELECT name, party, grade_current FROM Politicians 
-  WHERE party = 'R' AND grade_current BETWEEN 9 AND 11` , (err, rows) => {
+
+  let query = `
+    SELECT 
+      name, 
+      party, 
+      grade_current 
+    FROM 
+      Politicians 
+    WHERE 
+      party = 'R' AND grade_current 
+      BETWEEN 
+        9 AND 11`
+
+  db.all(query , (err, rows) => {
     if(err){
       console.log(err)
     } else {
@@ -34,9 +46,19 @@ function dua() {
            , 'left': '║' , 'left-mid': '╟' , 'mid': '─' , 'mid-mid': '┼'
            , 'right': '║' , 'right-mid': '╢' , 'middle': '│' }
   });
-  db.all(`SELECT COUNT(*) AS totalVote, name FROM Politicians
-  JOIN Votes ON Politicians.id = Votes.politicianId
-  WHERE name = 'Olympia Snowe'` , (err, rows) => {
+
+  let query = `
+    SELECT 
+      COUNT(*) AS totalVote, 
+      name 
+    FROM 
+      Politicians
+    JOIN 
+      Votes ON Politicians.id = Votes.politicianId
+    WHERE 
+      name = 'Olympia Snowe'`
+
+  db.all(query , (err, rows) => {
     if(err){
       console.log(err)
     } else {
@@ -60,10 +82,21 @@ function tiga() {
            , 'left': '║' , 'left-mid': '╟' , 'mid': '─' , 'mid-mid': '┼'
            , 'right': '║' , 'right-mid': '╢' , 'middle': '│' }
   });
-  db.all(`SELECT name , COUNT(*) AS totalVotes FROM Politicians 
-  JOIN Votes ON Politicians.id = Votes.politicianId
-  WHERE name LIKE 'Adam%'
-  GROUP BY name` , (err, rows) => {
+
+  let query = `
+    SELECT 
+      name , 
+      COUNT(*) AS totalVotes 
+    FROM 
+      Politicians 
+    JOIN 
+      Votes ON Politicians.id = Votes.politicianId
+    WHERE 
+      name LIKE 'Adam%'
+    GROUP BY 
+      name`
+
+  db.all(query , (err, rows) => {
     if(err){
       console.log(err)
     } else {
@@ -87,11 +120,24 @@ function empat() {
            , 'left': '║' , 'left-mid': '╟' , 'mid': '─' , 'mid-mid': '┼'
            , 'right': '║' , 'right-mid': '╢' , 'middle': '│' }
   });
-  db.all(`SELECT COUNT(*) AS totalVotes ,name , party , location FROM Politicians 
-  JOIN Votes ON Politicians.id = Votes.politicianId
-  GROUP BY name
-  ORDER BY totalVotes desc
-  LIMIT 3` , (err, rows) => {
+
+  let query = `
+    SELECT 
+      COUNT(*) AS totalVotes ,
+      name , 
+      party , 
+      location
+    FROM 
+      Politicians 
+    JOIN 
+      Votes ON Politicians.id = Votes.politicianId
+    GROUP BY 
+      name
+    ORDER BY 
+      totalVotes desc
+    LIMIT 3` 
+
+  db.all(query , (err, rows) => {
     if(err){
       console.log(err)
     } else {
@@ -115,10 +161,25 @@ function lima() {
            , 'left': '║' , 'left-mid': '╟' , 'mid': '─' , 'mid-mid': '┼'
            , 'right': '║' , 'right-mid': '╢' , 'middle': '│' }
   });
-  db.all(`SELECT first_name, last_name, gender , age FROM Voters
-  JOIN (SELECT * FROM Politicians
-  JOIN Votes ON Politicians.id = Votes.politicianId
-  WHERE name = 'Olympia Snowe') AS table1 ON Voters.id = table1.voterId` , (err, rows) => {
+  let query = `
+    SELECT 
+      first_name, 
+      last_name, 
+      gender , 
+      age 
+    FROM 
+      Voters
+    JOIN 
+      (SELECT * 
+       FROM 
+        Politicians
+       JOIN 
+        Votes ON Politicians.id = Votes.politicianId
+       WHERE 
+        name = 'Olympia Snowe') AS polVot
+    ON Voters.id = polVot.voterId` 
+    
+  db.all(query , (err, rows) => {
     if(err){
       console.log(err)
     } else {
