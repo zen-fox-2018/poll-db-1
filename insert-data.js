@@ -1,19 +1,17 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./database.db');
-const fs = require('fs')
 
-db.serialize(function() {
-  //Insert data
-  let politicians = fs.readFileSync('./politicians.csv', 'utf8')
-  let politiciansData = politicians.split('\n').slice(1)
+const argv = process.argv.slice(2)
+const command = argv[0]
+const options = argv.slice(1)
 
-  for (let i = 0; i < politiciansData.length; i++) {
-    let politiciansDataSplit = politiciansData[i].split(',')
+switch (command) {
+  case "Politicians":
     let queryInsertPolitician = `
       INSERT INTO Politicians
       (name,party,location,grade_current)
       VALUES
-      ("${politiciansDataSplit[0]}","${politiciansDataSplit[1]}","${politiciansDataSplit[2]}",${politiciansDataSplit[3]});
+      ("${options[0]}","${options[1]}","${options[2]}",${options[3]});
     `
     db.run(queryInsertPolitician, function(err) {
       if (err) {
@@ -23,19 +21,15 @@ db.serialize(function() {
         console.log(`sukses input data politician`);
       }
     })
-  }
+    db.close();
+    break;
 
-
-  let voters = fs.readFileSync('./voters.csv', 'utf8')
-  let votersData = voters.split('\n').slice(1)
-
-  for (let i = 0; i < votersData.length; i++) {
-    let votersDataSplit = votersData[i].split(',')
+  case "Voters":
     let queryInsertVoters = `
       INSERT INTO Voters
       (first_name,last_name,gender,age)
       VALUES
-      ("${votersDataSplit[0]}","${votersDataSplit[1]}","${votersDataSplit[2]}",${votersDataSplit[3]});
+      ("${options[0]}","${options[1]}","${options[2]}",${options[3]});
     `
     db.run(queryInsertVoters, function(err) {
       if (err) {
@@ -45,13 +39,10 @@ db.serialize(function() {
         console.log(`sukses input data voter`);
       }
     })
-  }
+    db.close();
+    break;
 
-  let votes = fs.readFileSync('./votes.csv', 'utf8')
-  let votesData = votes.split('\n').slice(1)
-
-  for (let i = 0; i < votesData.length; i++) {
-    let votesDataSplit = votesData[i].split(',')
+  case "Votes":
     let queryInsertVotes = `
       INSERT INTO Votes
       (voterId,politicianId)
@@ -66,7 +57,8 @@ db.serialize(function() {
         console.log(`sukses input data votes`);
       }
     })
-  }
-})
+    db.close();
+    break;
+  default: console.log(`silahkan gunakan dengan benar`);
 
-db.close();
+}
