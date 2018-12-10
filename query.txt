@@ -1,0 +1,28 @@
+
+RELEASE 3 : part 1
+SELECT name, party, grade_current FROM Candidates
+    WHERE party = "R" AND grade_current >= 9 AND grade_current < 11
+
+RELEASE 3: part 2
+SELECT name, COUNT(Votes.politicianId) AS totalVotes FROM Candidates 
+JOIN Votes ON Candidates.candidates_id = Votes.politicianId 
+GROUP BY name
+HAVING name LIKE "Olympia Snowe";
+
+RELEASE 3: part 3
+SELECT name, COUNT(Votes.politicianId) AS totalVotes FROM Candidates
+JOIN Votes ON Candidates.candidates_id = Votes.politicianId
+GROUP BY name
+HAVING name LIKE "Adam%";
+
+RELEASE 3: part 4
+SELECT name, party, location, COUNT(Votes.politicianId) AS totalVotes FROM Candidates
+JOIN Votes ON Candidates.candidates_id = Votes.politicianId
+GROUP BY name
+ORDER BY totalVotes DESC
+
+RELEASE 3: part 5
+SELECT first_name, last_name, gender, age FROM Voters 
+JOIN Votes ON Voters.voters_id = Votes.voterId
+WHERE politicianId = 17
+
