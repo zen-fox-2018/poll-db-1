@@ -22,8 +22,8 @@ let tableVotes = `CREATE TABLE Votes (
   voteId INTEGER PRIMARY KEY AUTOINCREMENT,
   voterId INTEGER NOT NULL,
   politicianId INTEGER NOT NULL,
-  FOREIGN KEY (voterID) REFERENCES Voters(voterID)
-  FOREIGN KEY (politicianID) REFERENCES Politicians(politicianID),
+  FOREIGN KEY (voterId) REFERENCES Voters(voterId)
+  FOREIGN KEY (politicianId) REFERENCES Politicians(politicianId),
 )`;
 
 db.serialize((err) => {

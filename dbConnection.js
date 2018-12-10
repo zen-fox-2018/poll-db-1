@@ -3,7 +3,7 @@ let db = new sqlite3.Database('./database.db', (err) => {
     if (err) {
         return console.log(err.message);
     } else {
-        console.log('Setup database...')
+        console.log('Setup database ...')
     }
 });
 
