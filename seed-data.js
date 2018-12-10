@@ -10,18 +10,18 @@ function readFile(file) {
 }
 
 db.serialize(function() {
-    let candidates = readFile("politicians.csv").split("\n").slice(1);
+    let politicians = readFile("politicians.csv").split("\n").slice(1);
 
-    for(let i = 0; i < candidates.length - 1; i++) {
-        let splitted = candidates[i].split(",");
-        let insertCandidates = `INSERT INTO Politicians (name, party, location, grade_current)
+    for(let i = 0; i < politicians.length - 1; i++) {
+        let splitted = politicians[i].split(",");
+        let insertPoliticians = `INSERT INTO Politicians (name, party, location, grade_current)
                                 VALUES("${splitted[0]}", "${splitted[1]}", "${splitted[2]}", ${splitted[3]});`
         
-        db.run(insertCandidates, function(err) {
+        db.run(insertPoliticians, function(err) {
             if(err) {
                 console.log(err)
             } else {
-                console.log("Sucessfully inserted data candidates!")
+                console.log("Sucessfully inserted data Politicians!")
             }
         })
     }

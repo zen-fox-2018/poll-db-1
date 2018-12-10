@@ -2,7 +2,7 @@
 const db = require("./db");
 
 db.serialize(function() {
-    let createTableCandidates = `CREATE TABLE IF NOT EXISTS Politicians (
+    let createTablePoliticians = `CREATE TABLE IF NOT EXISTS Politicians (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name VARCHAR(255),
         party Text,
@@ -10,11 +10,11 @@ db.serialize(function() {
         grade_current REAL
     );`
 
-    db.run(createTableCandidates, function(err) {
+    db.run(createTablePoliticians, function(err) {
         if(err) {
             console.log(err)
         } else {
-            console.log("Successfully created candidates table!")
+            console.log("Successfully created Politicians table!")
         }
     })
 
@@ -38,7 +38,7 @@ db.serialize(function() {
         voterId INTEGER,
         politicianId INTEGER,
             FOREIGN KEY (voterId) REFERENCES Voters(id),
-            FOREIGN KEY (politicianId) REFERENCES Candidates(id)
+            FOREIGN KEY (politicianId) REFERENCES Politicians(id)
     );`
 
     db.run(createTableConjunction, function(err) {

@@ -5,13 +5,13 @@ const command = args[0];
 
 switch (command) {
     case "politicians":
-        let insertNewCandidates = `INSERT INTO Candidates (name, party, location, grade_current)
-                                VALUES("${args[1]}", "${args[2]}", "${args[3]}", ${args[4]});`
-        db.run(insertNewCandidates, function(err) {
+        let insertNewPoliticians = `INSERT INTO Politicians (name, party, location, grade_current)
+                                    VALUES("${args[1]}", "${args[2]}", "${args[3]}", ${args[4]});`
+        db.run(insertNewPoliticians, function(err) {
             if(err) {
                 console.log(err)
             } else {
-                console.log("Sucessfully added new candidates!")
+                console.log("Sucessfully added new Politicians!")
             }
         })
         break;
@@ -26,6 +26,6 @@ switch (command) {
             }
         })
     break;
-    default: "Please choose between Candidates or Voters to add a new person!"
+    default: "Please choose between Politicians or Voters to add a new person!"
         break;
 }
